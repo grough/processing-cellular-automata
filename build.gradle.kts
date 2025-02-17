@@ -27,13 +27,13 @@ java {
 // Such as:
 // <libName>.jar will be the name of your build jar
 // <libName>.zip will be the name of your release file
-val libName = "myLibrary"
+val libName = "cellularAutomata"
 
 // The group ID of your library, which uniquely identifies your project.
 // It's often written in reverse domain name notation.
 // For example, if your website is "myDomain.com", your group ID would be "com.myDomain".
 // Replace "com.myDomain" with your own domain or organization name.
-group = "com.myDomain"
+group = "com.grough"
 
 // The version of your library. It usually follows semantic versioning (semver),
 // which uses three numbers separated by dots: "MAJOR.MINOR.PATCH" (e.g., "1.0.0").
@@ -52,33 +52,10 @@ version = "1.0.0"
 // If you run the Gradle task deployToProcessingSketchbook, and you do not see your library
 // listed as a contributed library, then one possible cause could be the sketchbook location
 // is wrong. You can check the sketchbook location in your Processing application preferences.
-var sketchbookLocation = ""
-val userHome = System.getProperty("user.home")
-val currentOS = OperatingSystem.current()
-if(currentOS.isMacOsX) {
-    sketchbookLocation = if (File("$userHome/Documents/Processing/sketchbook").isDirectory) {
-        "$userHome/Documents/Processing/sketchbook"
-    } else {
-        "$userHome/Documents/Processing"
-    }
-} else if(currentOS.isWindows) {
-    val docsFolder = if (File("$userHome/My Documents").isDirectory) {
-        "$userHome/My Documents"
-    } else {
-        "$userHome/Documents"
-    }
-    sketchbookLocation = if (File(docsFolder,"Processing/sketchbook").isDirectory) {
-        "$docsFolder/Processing/sketchbook"
-    } else {
-        "$docsFolder/Processing"
-    }
-} else {
-    sketchbookLocation = "$userHome/sketchbook"
-}
-// If you need to set the sketchbook location manually, uncomment out the following
-// line and set sketchbookLocation to the correct location
-// sketchbookLocation = "$userHome/sketchbook"
 
+// My sketchbook is in my iCloud Documents folder, so the path is non-standard
+val userHome = System.getProperty("user.home")
+var sketchbookLocation = "$userHome/Library/Mobile Documents/com~apple~CloudDocs/Documents/Processing"
 
 // Repositories where dependencies will be fetched from.
 // You can add additional repositories here if your dependencies are hosted elsewhere.
@@ -94,7 +71,7 @@ dependencies {
     compileOnly(group = "org.processing", name = "core", version = "4.3.1")
 
     // insert your external dependencies
-    implementation(group = "org.apache.commons", name = "commons-math3", version = "3.6.1")
+    // implementation(group = "org.apache.commons", name = "commons-math3", version = "3.6.1")
     // The provided example uses commons-math3. Replace or add as needed.
 
     // To add a dependency on a Processing library that is installed locally,
