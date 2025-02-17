@@ -1,41 +1,58 @@
-# Processing Library Template
-This is a template to help developers of Processing libraries to develop and release.
+# Cellular Automata for Processing
 
-Please read the [documentation website](https://processing.github.io/processing-library-template/)
-for more information on how to use this template.
+This library allows you to make art in Processing using [cellular automata](https://en.wikipedia.org/wiki/Cellular_automaton). See [Conway's Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) for an example of a well known cellular automaton.
 
-Three important outputs are required to contribute a library to Processing, and this template provides 
-help and guidance on them. They are:
-1. **The library's code** - This template will build your code into a jar file with Gradle.
-2. **A website for the library** - We recommend using [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/)
-   to create a static website for your library. It allows you to write content for your website
-   using markdown, and structure the site using a yml configuration file. We provide a skeleton
-   MkDocs website as part of this template.
-3. **A url that serves the release artifacts** - We have already configured Gradle tasks to create the
-   release artifacts. If you host your code on Github, You can create a Github release that serves the 
-   release artifacts.
+## Get Started
 
+1. Install [Processing](https://processing.org)
+2. Go to this repository's [releases page](https://github.com/grough/processing-cellular-automata/releases/latest) and download the latest `cellularAutomata.zip` file
+3. Extract the zip file to the "libraries" sub-folder of your Processing documents folder
+4. Launch Processing, go to _File → Examples_, and browse the _Cellular Automata_ examples
 
-References for developing libraries for Processing can be found on the following Github wiki pages:
-- https://github.com/processing/processing4/wiki/Library-Basics
-- https://github.com/processing/processing4/wiki/Library-Guidelines
-- https://github.com/processing/processing4/wiki/Library-Overview
+## Usage
 
-> [!Note]
-> This template is based on Gradle. If you are looking for the old Ant-based template, see [processing/processing-library-template-ant](https://github.com/processing/processing-library-template-ant)
+```processing
+// Import the library
+import grough.cellularAutomata.*;
 
+// Create your own animation by extending the base class.
+// Choose a data type for your cells. In this case we use Boolean.
+class MyAnimation extends CellularAutomata<Boolean> {
 
-## Contributors
+  // Populate the initial cell values.
+  Boolean populate() {
+    return random(0, 1) < 0.5;
+  }
 
-This template was created by Claudine Chen ([@mingness](https://github.com/mingness)) as part of the 2024 New Beginnings (pr05) Grant from the 
-[Processing Foundation](https://github.com/processing), to simplify the
-workflows for libraries, tools, and modes, mentored by Stef Tervelde ([@Stefterv](https://github.com/stefterv)).
+  // Calculate the next cell value based on the previous cell value.
+  Boolean evolve() {
+    if (random(0, 1) < 0.1) {
+      return self();
+    } else {
+      return !self();
+    }
+  }
 
-It is based on and inspired by a number of Processing library templates, including:
-- https://github.com/processing/processing-library-template-gradle
-- https://github.com/enkatsu/processing-library-template-gradle
-- https://github.com/hamoid/processing-library-template/
+  // Assign the cell a color based on its value.
+  int shade() {
+    return self() ? 0 : 255;
+  }
+}
 
-I wish to thank the developers of these repositories, who generously provided
-guidance and time. This template has been developed in collaboration with
-[@enkatsu](https://github.com/enkatsu).
+MyAnimation animation = new MyAnimation();
+
+void setup() {
+  size(640, 640);
+  
+  // Keep the edges sharp when we scale up the graphics.
+  noSmooth();
+}
+
+void draw() {
+  // Advance to the next animation frame each time we draw.
+  animation.next();
+
+  // Draw the animation's graphics on the screen.
+  image(animation.graphics(), 0, 0, 640, 640);
+}
+```
