@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * A two-dimensional grid.
  */
-public class Grid<T> {
+class Grid<T> {
     int cols, rows;
     ArrayList<ArrayList<T>> cells;
 
