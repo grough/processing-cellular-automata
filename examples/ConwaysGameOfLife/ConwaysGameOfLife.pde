@@ -1,6 +1,6 @@
 import com.grough.cellularAutomata.*;
 
-class GameOfLife extends CellularAutomata<Boolean> {
+class GameOfLife extends Automaton<Boolean> {
 
   // Start with a random selection of living cells.
   Boolean populate() {

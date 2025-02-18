@@ -9,7 +9,7 @@ import static processing.core.PConstants.PI;
 /**
  * Evolve the value of a rectangular grid of cells.
  */
-public abstract class CellularAutomata<T> {
+public abstract class Automaton<T> {
     int frame = 0;
     int cols, rows, col, row;
     Grid<T> grid;
@@ -18,7 +18,7 @@ public abstract class CellularAutomata<T> {
     /**
      * Construct with a default size.
      */
-    protected CellularAutomata() {
+    protected Automaton() {
         size(16, 16);
     }
 

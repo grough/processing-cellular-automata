@@ -17,7 +17,7 @@ import grough.cellularAutomata.*;
 
 // Create your own animation by extending the base class.
 // Choose a data type for your cells. In this case we use Boolean.
-class MyAnimation extends CellularAutomata<Boolean> {
+class MyAnimation extends Automaton<Boolean> {
 
   // Populate the initial cell values.
   Boolean populate() {
