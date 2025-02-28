@@ -1,4 +1,4 @@
-import com.grough.cellularAutomata.*;
+import com.grough.automata.*;
 
 class GameOfLife extends Automaton<Boolean> {
 

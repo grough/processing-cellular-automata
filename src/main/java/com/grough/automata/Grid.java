@@ -1,4 +1,4 @@
-package com.grough.cellularAutomata;
+package com.grough.automata;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.grough.cellularAutomata;
+package com.grough.automata;
 
 import processing.awt.PGraphicsJava2D;
 import processing.core.PGraphics;

@@ -27,7 +27,7 @@ java {
 // Such as:
 // <libName>.jar will be the name of your build jar
 // <libName>.zip will be the name of your release file
-val libName = "cellularAutomata"
+val libName = "automata"
 
 // The group ID of your library, which uniquely identifies your project.
 // It's often written in reverse domain name notation.
