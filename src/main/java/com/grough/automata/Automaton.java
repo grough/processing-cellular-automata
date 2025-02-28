@@ -11,6 +11,7 @@ import static processing.core.PConstants.PI;
 public abstract class Automaton<T> {
     int frame = 0;
     int cols, rows, col, row;
+    int width, height;
     Grid<T> grid;
     PGraphicsJava2D graphics;
 
@@ -19,18 +20,18 @@ public abstract class Automaton<T> {
      */
     protected Automaton() {
         size(16, 16);
+        dimensions(640, 640);
     }
 
     /**
      * Set the size of the grid.
+     *
      * @param cols Columns
      * @param rows Rows
      */
     public void size(int cols, int rows) {
         this.cols = cols;
         this.rows = rows;
-        graphics = new PGraphicsJava2D();
-        graphics.setSize(this.cols, this.rows);
         grid = new Grid<T>(this.cols, this.rows);
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
@@ -39,6 +40,19 @@ public abstract class Automaton<T> {
                 grid.setRaw(col, row, populate());
             }
         }
+    }
+
+    /**
+     * Set the output dimensions.
+     *
+     * @param width  Output width
+     * @param height Output height
+     */
+    public void dimensions(int width, int height) {
+        this.width = width;
+        this.height = height;
+        graphics = new PGraphicsJava2D();
+        graphics.setSize(this.width, this.height);
     }
 
     /**
@@ -61,16 +75,32 @@ public abstract class Automaton<T> {
             for (int col = 0; col < cols; col++) {
                 this.col = col;
                 this.row = row;
-                graphics.stroke(shade());
-                graphics.point(col, row);
+
+                graphics.noStroke();
+                graphics.fill(shade());
+
+                Box b = box();
+                graphics.rect(b.x1, b.y1, b.w, b.h);
             }
         }
         graphics.endDraw();
         frame = frame + 1;
     }
 
+    private Box box() {
+        int boxWidth = width / cols;
+        int boxHeight = height / rows;
+        int left = col() * boxWidth;
+        int top = row() * boxHeight;
+        int right = left + boxWidth;
+        int bottom = top + boxHeight;
+        Box box = new Box(top, left, bottom, right);
+        return box;
+    }
+
     /**
      * Get the value of a cell.
+     *
      * @param col Column number
      * @param row Row number
      * @return Cell value at col, row
@@ -81,6 +111,7 @@ public abstract class Automaton<T> {
 
     /**
      * Get the painted graphics.
+     *
      * @return Graphics
      */
     public PGraphicsJava2D graphics() {
@@ -89,6 +120,7 @@ public abstract class Automaton<T> {
 
     /**
      * Get the current cell's state.
+     *
      * @return cell value
      */
     protected T self() {
@@ -97,6 +129,7 @@ public abstract class Automaton<T> {
 
     /**
      * Get a cell value using absolute coordinates.
+     *
      * @param col Column
      * @param row Row
      * @return Cell value
@@ -107,6 +140,7 @@ public abstract class Automaton<T> {
 
     /**
      * Get a cell value using relative coordinates.
+     *
      * @param colOffset Relative column address
      * @param rowOffset Relative row address
      * @return Cell value
@@ -117,6 +151,7 @@ public abstract class Automaton<T> {
 
     /**
      * Get the current cell column number.
+     *
      * @return Current cell column number
      */
     protected int col() {
@@ -125,6 +160,7 @@ public abstract class Automaton<T> {
 
     /**
      * Get the current cell row number.
+     *
      * @return Current cell row number
      */
     protected int row() {
@@ -133,6 +169,7 @@ public abstract class Automaton<T> {
 
     /**
      * Check if the current cell is a given address.
+     *
      * @param col Column to check
      * @param row Row to check
      * @return Whether the current cell matches the given address
@@ -147,6 +184,7 @@ public abstract class Automaton<T> {
 
     /**
      * Get the bipolar X coordinate of the cell.
+     *
      * @return X coordinate
      */
     protected float x() {
@@ -155,6 +193,7 @@ public abstract class Automaton<T> {
 
     /**
      * Get the bipolar Y coordinate of the cell.
+     *
      * @return Y coordinate
      */
     protected float y() {
@@ -163,15 +202,17 @@ public abstract class Automaton<T> {
 
     /**
      * Get the angle of the cell.
+     *
      * @return Angle in radians
      */
     protected float angle() {
         float theta = atan2(y(), x());
-        return  theta > 0 ? theta : theta + 2 * PI;
+        return theta > 0 ? theta : theta + 2 * PI;
     }
 
     /**
      * Get the cell's distance from the origin.
+     *
      * @return Radius
      */
     protected float radius() {
@@ -182,6 +223,7 @@ public abstract class Automaton<T> {
 
     /**
      * Get the current frame number
+     *
      * @return Frame number
      */
     protected int frame() {
@@ -190,18 +232,21 @@ public abstract class Automaton<T> {
 
     /**
      * Override to set initial cell value.
+     *
      * @return Initial cell value
      */
     protected abstract T populate();
 
     /**
      * Override to evolve cell value.
+     *
      * @return New cell value
      */
     protected abstract T evolve();
 
     /**
      * Override to define cell color.
+     *
      * @return Cell color
      */
     protected abstract int shade();
@@ -212,7 +257,7 @@ public abstract class Automaton<T> {
     public void print() {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
-                println(col, row, grid.getRaw(col, row)) ;
+                println(col, row, grid.getRaw(col, row));
             }
         }
     }

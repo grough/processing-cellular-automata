@@ -16,7 +16,7 @@ class Animation extends Automaton<Boolean> {
 
     @Override
     protected Boolean evolve() {
-        return self();
+        return false;
     }
 
     @Override
@@ -30,7 +30,15 @@ class AutomatonTest {
     @Test
     void test() {
         Animation a = new Animation();
-        assertEquals(a.get(0, 0), true, "0 0 is true");
-        assertEquals(a.get(0, 1), false, "0 1 is false");
+
+        a.size(16, 16);
+        a.dimensions(64, 64);
+
+        assertEquals(a.get(0, 0), true);
+        assertEquals(a.get(0, 1), false);
+
+        a.next();
+        a.graphics();
+        assertEquals(a.get(0, 0), false);
     }
 }
