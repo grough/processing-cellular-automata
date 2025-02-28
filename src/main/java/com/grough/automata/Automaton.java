@@ -118,15 +118,17 @@ public abstract class Automaton<T> {
      * Get the current cell row number.
      * @return Current cell row number
      */
-    int row() {
+    protected int row() {
         return row;
     }
 
     /**
      * Check if the current cell is a given address.
-     * @return Whether the current cell matche the gvien address
+     * @param col Column to check
+     * @param row Row to check
+     * @return Whether the current cell matches the given address
      */
-    boolean is(int col, int row) {
+    protected boolean is(int col, int row) {
         return this.col == col && this.row == row;
     }
 
@@ -134,26 +136,46 @@ public abstract class Automaton<T> {
         return (-v * c + c * b + v * d - a * d) / (b - a);
     }
 
-    float x() {
+    /**
+     * Get the bipolar X coordinate of the cell.
+     * @return X coordinate
+     */
+    protected float x() {
         return scale(col, 0, cols - 1, -1, 1);
     }
 
-    float y() {
+    /**
+     * Get the bipolar Y coordinate of the cell.
+     * @return Y coordinate
+     */
+    protected float y() {
         return scale(row, 0, rows - 1, -1, 1);
     }
 
-    float angle() {
+    /**
+     * Get the angle of the cell.
+     * @return Angle in radians
+     */
+    protected float angle() {
         float theta = atan2(y(), x());
         return  theta > 0 ? theta : theta + 2 * PI;
     }
 
-    float radius() {
+    /**
+     * Get the cell's distance from the origin.
+     * @return Radius
+     */
+    protected float radius() {
         float x = x();
         float y = y();
         return sqrt(x * x + y * y);
     }
 
-    int frame() {
+    /**
+     * Get the current frame number
+     * @return Frame number
+     */
+    protected int frame() {
         return frame;
     }
 
