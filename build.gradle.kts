@@ -68,7 +68,7 @@ repositories {
 // The provided example uses Apache Commons Math. Replace or add as needed.
 dependencies {
     // resolve Processing core
-    compileOnly(group = "org.processing", name = "core", version = "4.3.1")
+    compileOnly(group = "org.processing", name = "core", version = "4.3.2")
 
     // insert your external dependencies
     // implementation(group = "org.apache.commons", name = "commons-math3", version = "3.6.1")
@@ -80,6 +80,7 @@ dependencies {
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.processing:core:4.3.2")
 }
 
 tasks.test {

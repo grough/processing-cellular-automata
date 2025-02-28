@@ -1,7 +1,6 @@
 package com.grough.automata;
 
 import processing.awt.PGraphicsJava2D;
-import processing.core.PGraphics;
 
 import static processing.core.PApplet.*;
 import static processing.core.PConstants.PI;
@@ -71,10 +70,20 @@ public abstract class Automaton<T> {
     }
 
     /**
+     * Get the value of a cell.
+     * @param col Column number
+     * @param row Row number
+     * @return Cell value at col, row
+     */
+    public T get(int col, int row) {
+        return grid.get(col, row);
+    }
+
+    /**
      * Get the painted graphics.
      * @return Graphics
      */
-    public PGraphics graphics() {
+    public PGraphicsJava2D graphics() {
         return graphics;
     }
 
