@@ -14,11 +14,13 @@ public abstract class Automaton<T> {
     int width, height;
     Grid<T> grid;
     PGraphicsJava2D graphics;
+    Domain domain;
 
     /**
      * Construct with a default size.
      */
     protected Automaton() {
+        domain = new Domain();
         size(16, 16);
         dimensions(640, 640);
     }
@@ -32,6 +34,7 @@ public abstract class Automaton<T> {
     public void size(int cols, int rows) {
         this.cols = cols;
         this.rows = rows;
+        domain.size(cols, rows);
         grid = new Grid<T>(this.cols, this.rows);
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
@@ -88,14 +91,13 @@ public abstract class Automaton<T> {
     }
 
     private Box box() {
-        int boxWidth = width / cols;
-        int boxHeight = height / rows;
-        int left = col() * boxWidth;
-        int top = row() * boxHeight;
-        int right = left + boxWidth;
-        int bottom = top + boxHeight;
-        Box box = new Box(top, left, bottom, right);
-        return box;
+        float boxWidth = (float) width / cols;
+        float boxHeight = (float) height / rows;
+        float x1 = col() * boxWidth;
+        float y1 = row() * boxHeight;
+        float x2 = x1 + boxWidth;
+        float y2 = y1 + boxHeight;
+        return new Box(x1, y1, x2, y2);
     }
 
     /**
@@ -178,17 +180,13 @@ public abstract class Automaton<T> {
         return this.col == col && this.row == row;
     }
 
-    float scale(float v, float a, float b, float c, float d) {
-        return (-v * c + c * b + v * d - a * d) / (b - a);
-    }
-
     /**
      * Get the bipolar X coordinate of the cell.
      *
      * @return X coordinate
      */
     protected float x() {
-        return scale(col, 0, cols - 1, -1, 1);
+        return domain.x(col);
     }
 
     /**
@@ -197,7 +195,7 @@ public abstract class Automaton<T> {
      * @return Y coordinate
      */
     protected float y() {
-        return scale(row, 0, rows - 1, -1, 1);
+        return domain.y(row);
     }
 
     /**
@@ -208,6 +206,15 @@ public abstract class Automaton<T> {
     protected float angle() {
         float theta = atan2(y(), x());
         return theta > 0 ? theta : theta + 2 * PI;
+    }
+
+    /**
+     * Set amout of coordinate fuzzing.
+     *
+     * @param amount Fuzz amount betweem 0..1
+     */
+    public void fuzz(float amount) {
+        domain.dither(amount);
     }
 
     /**
