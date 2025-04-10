@@ -43,9 +43,6 @@ MyAnimation animation = new MyAnimation();
 
 void setup() {
   size(640, 640);
-  
-  // Keep the edges sharp when we scale up the graphics.
-  noSmooth();
 }
 
 void draw() {

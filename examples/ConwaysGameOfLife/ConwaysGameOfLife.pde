@@ -56,7 +56,6 @@ class GameOfLife extends Automaton<Boolean> {
 GameOfLife life = new GameOfLife();
 
 void setup() {
-  noSmooth();
   size(480, 480);
   frameRate(12);
   life.size(32, 32);
@@ -64,5 +63,5 @@ void setup() {
 
 void draw() {
   life.next();
-  image(life.graphics(), 0, 0, 480, 480);
+  image(life.graphics(), 0, 0, width, height);
 }
