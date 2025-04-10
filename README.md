@@ -5,7 +5,7 @@ This library allows you to make art in Processing using [cellular automata](http
 ## Get Started
 
 1. Install [Processing](https://processing.org)
-2. Go to this repository's [releases page](https://github.com/grough/processing-cellular-automata/releases/latest) and download the latest `cellularAutomata.zip` file
+2. Download the latest [automata.zip](https://github.com/grough/processing-cellular-automata/releases/latest/download/automata.zip)
 3. Extract the zip file to the "libraries" sub-folder of your Processing documents folder
 4. Launch Processing, go to _File → Examples_, and browse the _Cellular Automata_ examples
 
@@ -13,7 +13,7 @@ This library allows you to make art in Processing using [cellular automata](http
 
 ```processing
 // Import the library
-import grough.cellularAutomata.*;
+import com.grough.automata.*;
 
 // Create your own animation by extending the base class.
 // Choose a data type for your cells. In this case we use Boolean.
